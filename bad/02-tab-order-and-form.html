@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulk Hire &amp; Tools | Get a quote</title>
+<!--
+  MOCK SITE - DELIBERATELY INACCESSIBLE. Do not fix; it exists to demonstrate failures.
+
+  Page 2 of 3. Theme: the order focus moves in, and what a form says (or does not say) out loud.
+
+  WHAT IS BROKEN - tab order
+  - The quote fields carry positive `tabindex` values 1 to 6. Focus follows those numbers across
+    the whole document before anything with `tabindex="0"`, so Tab goes: Delivery postcode
+    (top of form) -> Card number (bottom of form) -> Your name (top of form) -> Hire period ->
+    Expiry -> Security code. The navigation and the "Need help?" panel are skipped entirely on
+    the first pass.
+  - `Get a quote` and `Save as draft` both carry `tabindex="1"`, so which one comes first is
+    decided by the browser, not the author.
+  - A plain `div` carries `tabindex="0"`: pressing Tab lands on furniture that announces
+    nothing and does nothing.
+  - The "Need help?" panel is last in the DOM but is displayed above the form with a CSS
+    `order` rule, so the reading order and the visual order do not match. A screen reader user
+    hears the delivery charges only after they have completed the form.
+
+  WHAT IS BROKEN - labels
+  - Name, email and phone have a placeholder and nothing else: no `<label>`, no `aria-label`,
+    no `aria-labelledby`, no `title`. A screen reader announces "edit text, blank" and nothing
+    more - the placeholder is not a label, and it disappears as soon as anything is typed.
+  - `Delivery date` has `<label for="delivery-date">` but the input is `id="delivery_date"`, so
+    the label is decoration: it is never announced with the field.
+  - The hire-period radios have no `fieldset`/`legend` and no `<label>` elements: the group is
+    announced as three unnamed radio buttons.
+  - Day, month and year are three unlabelled selects, announced as "combo box, 01", "combo box,
+    AM", "combo box, Before 10am" with no indication of what is being chosen.
+  - Required fields are marked with a red asterisk only: no `required`, no `aria-required`, and
+    nothing tells a screen reader that the asterisk means anything.
+  - No `autocomplete` on name, email, tel, street-address, postal-code or cc-number.
+  - The security-code image has no `alt` and no text alternative.
+
+  WHAT IS BROKEN - errors
+  - Validation only changes a border to red. There is no error text, no `aria-invalid`, no
+    `aria-describedby` and no icons, and focus stays on the submit button, so nothing at all is
+    announced.
+  - An empty `aria-live` region sits beside the message that should have been announced.
+
+  WCAG 2.2: 2.4.3 Focus Order, 1.3.2 Meaningful Sequence, 1.3.1 Info and Relationships,
+  3.3.2 Labels or Instructions, 3.3.1 Error Identification, 4.1.2 Name Role Value,
+  3.3.7 Redundant Entry.
+-->
+<style>
+  :root { --ink:#1d2733; --muted:#6b7684; --line:#d5dbe3; --brand:#0b5cab; --bg:#f6f8fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); }
+  a { color:var(--brand); }
+  header { border-bottom:1px solid var(--line); }
+  header .inner { display:flex; align-items:center; gap:18px; max-width:1000px; margin:0 auto; padding:14px 16px; }
+  .logo { font-weight:800; font-size:20px; color:#083f77; text-decoration:none; }
+  header nav a { margin-right:14px; text-decoration:none; color:var(--ink); }
+  main { max-width:1000px; margin:0 auto; padding:24px 16px 72px; }
+  h1 { font-size:28px; margin:0 0 6px; }
+  h2 { font-size:19px; margin:26px 0 10px; }
+  /* The help panel is first visually, last in the DOM. */
+  .layout { display:flex; flex-direction:column; }
+  .help { order:-1; border:1px solid var(--line); background:#fbfcfd; padding:16px; margin-top:20px; }
+  .form { order:1; }
+  .row { display:flex; gap:14px; }
+  .field { margin-bottom:16px; flex:1; }
+  .field input[type=text], .field input[type=email], .field input[type=tel], .field select, .field textarea {
+    width:100%; padding:10px 12px; border:1px solid var(--line); font:inherit; color:#1d2733;
+  }
+  .field input::placeholder { color:#8d97a3; }
+  label { display:block; font-size:14px; margin-bottom:5px; }
+  .req { color:#d33; }
+  .hint { font-size:13px; color:var(--muted); margin-bottom:6px; }
+  .radios { display:flex; gap:20px; margin:6px 0 18px; }
+  .error { border-color:#d33 !important; background:#fff6f6; }
+  button.primary { background:#0b5cab; color:#fff; border:0; padding:12px 22px; font:inherit; font-weight:600; cursor:pointer; }
+  button.link { background:none; border:0; color:var(--brand); text-decoration:underline; font:inherit; cursor:pointer; }
+  .summary { margin-top:16px; font-size:14px; color:#d33; }
+  .captcha { display:flex; align-items:center; gap:12px; }
+  footer { border-top:1px solid var(--line); background:var(--bg); }
+  footer .inner { max-width:1000px; margin:0 auto; padding:20px 16px; font-size:14px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="logo" href="/">Bulk Hire &amp; Tools</a>
+    <nav aria-label="Main">
+      <a href="/hire">Hire</a>
+      <a href="/buy">Buy</a>
+      <a href="/branches">Branches</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Get a quote for scissor lift hire</h1>
+  <p>Tell us what you need and we will confirm availability and pricing by email within one working hour. The first Tab press does not start here; it starts in the middle of the form below.</p>
+
+  <div class="layout">
+
+    <!-- Last in the DOM, first on screen. -->
+    <div class="help">
+      <h2 style="margin-top:0">Need help?</h2>
+      <p>Delivery is free within 20 miles of a branch for hires over &pound;100. Out of hours collection is 1 further per hour. This panel sits at the top of the page but is read out last, after the form.</p>
+      <p><a href="/contact">Email the hire desk</a> &middot; <a href="/faq">Delivery FAQs</a></p>
+    </div>
+
+    <div class="form">
+      <form id="quote" action="/quote" method="post" novalidate>
+
+        <div class="row">
+          <div class="field">
+            <!-- Tab stop 1, and the first field on screen. -->
+            <label for="postcode">Delivery postcode</label>
+            <input id="postcode" name="postcode" tabindex="1" autocomplete="postal-code" placeholder="DE1 1AA">
+          </div>
+          <div class="field">
+            <input type="text" name="name" tabindex="3" placeholder="No label here, so this box is announced as edit text, blank">
+            <label for="name-does-not-exist">Your name</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <input type="email" name="email" placeholder="No label either, so nothing is said for this one">
+          </div>
+          <div class="field">
+            <input type="tel" name="phone" placeholder="No label here either">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="delivery-date">Delivery date <span class="req">*</span></label>
+          <input type="text" id="delivery_date" name="delivery_date" placeholder="DD/MM/YYYY">
+        </div>
+
+        <div class="field">
+          <label for="site">Site address <span class="req">*</span></label>
+          <textarea id="site" name="site" rows="3" placeholder="Street, town, postcode"></textarea>
+        </div>
+
+        <div>
+          <p class="hint">Hire period <span class="req">*</span></p>
+          <div class="radios">
+            <span><input type="radio" name="period" value="day"> One day</span>
+            <span><input type="radio" name="period" value="week"> One week</span>
+            <span><input type="radio" name="period" value="month"> One month</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <p class="hint">Preferred delivery window</p>
+          <div class="row">
+            <select name="window-day"><option>01</option><option>02</option><option>03</option></select>
+            <select name="window-half"><option>AM</option><option>PM</option></select>
+            <select name="window-time"><option>Before 10am</option><option>10am to 2pm</option><option>After 2pm</option></select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="card">Card number</label>
+            <input id="card" name="card" tabindex="2" inputmode="numeric" placeholder="Tab stop two, right at the bottom of the page">
+          </div>
+          <div class="field">
+            <label for="period-2">Hire period</label>
+            <select id="period-2" name="period_repeat" tabindex="4">
+              <option>1 day</option><option>1 week</option><option>1 month</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="expiry">Expiry</label>
+            <input id="expiry" name="expiry" tabindex="5">
+          </div>
+          <div class="field">
+            <label for="cvc">Security code</label>
+            <input id="cvc" name="cvc" tabindex="6">
+          </div>
+        </div>
+
+        <div class="field">
+          <p class="hint">Security check <span class="req">*</span></p>
+          <div class="captcha">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='44'%3E%3Crect width='150' height='44' fill='%23eef2f7'/%3E%3Ctext x='12' y='30' font-family='monospace' font-size='22' fill='%236b7684'%3E7K4QP9%3C/text%3E%3C/svg%3E" width="150" height="44">
+            <input type="text" name="captcha" placeholder="Type the code">
+          </div>
+        </div>
+
+        <button class="primary" type="submit" tabindex="1">Get a quote</button>
+        <button class="link" type="reset">Clear form</button>
+
+        <div aria-live="polite" id="error-region"></div>
+        <div class="summary" id="summary"></div>
+      </form>
+    </div>
+
+    <!-- A focusable div: a tab stop that announces nothing. -->
+    <div class="help" tabindex="0">
+      <h2 style="margin-top:0">Hire terms at a glance</h2>
+      <p>Fuel is supplied full and must be returned full. Damage waiver is 12% of the hire charge. Late returns are charged at the daily rate.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="inner">&copy; Bulk Hire &amp; Tools &middot; <a href="/legal/accessibility">Accessibility</a></div>
+</footer>
+
+<script>
+  document.getElementById('quote').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var fields = this.querySelectorAll('input[name=postcode], input[name=name], input[name=email], textarea[name=site], input[name=card]');
+    var bad = false;
+    fields.forEach(function (el) {
+      el.classList.remove('error');
+      if (!el.value.trim()) { el.classList.add('error'); bad = true; }
+    });
+    document.getElementById('summary').textContent = bad ? 'Please correct the highlighted fields.' : 'Request sent.';
+  });
+</script>
+
+</body>
+</html>

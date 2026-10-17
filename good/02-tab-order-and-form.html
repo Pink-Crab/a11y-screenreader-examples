@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get a quote for scissor lift hire | Bulk Hire &amp; Tools</title>
+<!--
+  CLEAN SITE - the screen reader friendly counterpart to bad/02-tab-order-and-form.html.
+  Same form, same fields, same order on screen. The copy carries no commentary.
+
+  FIXED
+  - No positive `tabindex` anywhere: focus order is DOM order, and DOM order is screen order.
+  - No `tabindex="0"` on plain containers, so there are no tab stops that announce nothing.
+  - The help panel is first in the DOM as well as first on screen.
+  - Every field has a `<label for>` matching its id. Fields are grouped with
+    `fieldset`/`legend`, so the radio group announces "Hire period" before each option.
+  - Each delivery-window select has its own label, so they announce as day, half of day and
+    time slot instead of "combo box, 01".
+  - Required fields carry `required` and the word "required", not an asterisk alone.
+  - `autocomplete` is set on name, email, telephone, address, postcode and payment fields.
+  - The security code image has `alt`, and there is a second way to get the code.
+  - Validation sets `aria-invalid`, puts a message in an `aria-describedby` target, lists the
+    problems in a `role="alert"` summary and moves focus to that summary.
+  - No duplicate hire-period question, so nothing has to be entered twice.
+-->
+<style>
+  :root { --ink:#1d2733; --muted:#6b7684; --line:#d5dbe3; --brand:#0b5cab; --bg:#f6f8fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); }
+  a { color:var(--brand); }
+  .skip { position:absolute; left:-9999px; top:0; background:#fff; padding:10px 16px; border:2px solid var(--brand); }
+  .skip:focus { left:0; z-index:50; }
+  header { border-bottom:1px solid var(--line); }
+  header .inner { display:flex; align-items:center; gap:18px; max-width:1000px; margin:0 auto; padding:14px 16px; }
+  .logo { font-weight:800; font-size:20px; color:#083f77; text-decoration:none; }
+  header nav a { margin-right:14px; text-decoration:none; color:var(--ink); }
+  main { max-width:1000px; margin:0 auto; padding:24px 16px 72px; }
+  h1 { font-size:28px; margin:0 0 6px; }
+  h2 { font-size:19px; margin:0 0 10px; }
+  .help { border:1px solid var(--line); background:#fbfcfd; padding:16px; margin:20px 0 26px; }
+  fieldset { border:1px solid var(--line); padding:14px 16px 4px; margin:0 0 20px; }
+  legend { font-weight:600; padding:0 6px; }
+  .row { display:flex; gap:14px; }
+  .field { margin-bottom:16px; flex:1; }
+  .field input, .field select, .field textarea { width:100%; padding:10px 12px; border:1px solid var(--line); font:inherit; color:#1d2733; }
+  label { display:block; font-size:14px; margin-bottom:5px; }
+  .req { color:#a11; font-weight:400; }
+  .hint { font-size:13px; color:var(--muted); margin:4px 0 0; }
+  .err-msg { font-size:14px; color:#a11; margin:4px 0 0; }
+  .radios { display:flex; gap:20px; margin:6px 0 14px; }
+  .radios label { display:inline; font-size:16px; }
+  .error { border-color:#a11; }
+  button.primary { background:#0b5cab; color:#fff; border:0; padding:12px 22px; font:inherit; font-weight:600; cursor:pointer; }
+  button.link { background:none; border:0; color:var(--brand); text-decoration:underline; font:inherit; cursor:pointer; }
+  .summary { border:2px solid #a11; padding:12px 16px; margin-bottom:20px; }
+  .summary h2 { font-size:17px; margin:0 0 8px; color:#a11; }
+  .summary ul { margin:0; padding-left:20px; }
+  .captcha { display:flex; align-items:center; gap:12px; }
+  footer { border-top:1px solid var(--line); background:var(--bg); }
+  footer .inner { max-width:1000px; margin:0 auto; padding:20px 16px; font-size:14px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+
+<header>
+  <div class="inner">
+    <a class="logo" href="/">Bulk Hire &amp; Tools</a>
+    <nav aria-label="Main">
+      <a href="/hire">Hire</a>
+      <a href="/buy">Buy</a>
+      <a href="/branches">Branches</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <h1>Get a quote for scissor lift hire</h1>
+  <p>Tell us what you need and we will confirm availability and pricing by email within one working hour.</p>
+
+  <section class="help" aria-labelledby="help-heading">
+    <h2 id="help-heading">Need help?</h2>
+    <p>Delivery is free within 20 miles of a branch for hires over &pound;100. Out of hours collection is &pound;1 an hour.</p>
+    <p><a href="/contact">Email the hire desk</a> &middot; <a href="/faq">Delivery FAQs</a></p>
+  </section>
+
+  <form id="quote" action="/quote" method="post" novalidate>
+
+    <div class="summary" id="error-summary" role="alert" tabindex="-1" hidden>
+      <h2>There is a problem</h2>
+      <ul id="error-summary-list"></ul>
+    </div>
+
+    <fieldset>
+      <legend>Your details</legend>
+
+      <div class="row">
+        <div class="field">
+          <label for="postcode">Delivery postcode <span class="req">required</span></label>
+          <input id="postcode" name="postcode" type="text" autocomplete="postal-code" placeholder="DE1 1AA" aria-describedby="postcode-hint" data-describedby="postcode-hint">
+          <p class="hint" id="postcode-hint">The nearest branch quotes for this postcode.</p>
+          <p class="err-msg" id="err-postcode" hidden>Enter your delivery postcode.</p>
+        </div>
+        <div class="field">
+          <label for="name">Site contact name <span class="req">required</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-hint" data-describedby="name-hint">
+          <p class="hint" id="name-hint">Who we should ask for on site.</p>
+          <p class="err-msg" id="err-name" hidden>Enter the site contact name.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="email">Email address <span class="req">required</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-hint" data-describedby="email-hint">
+          <p class="hint" id="email-hint">The quote is sent here.</p>
+          <p class="err-msg" id="err-email" hidden>Enter an email address we can send the quote to.</p>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number <span class="req">required</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" aria-describedby="phone-hint" data-describedby="phone-hint">
+          <p class="hint" id="phone-hint">For the driver on the day, if the site contact is not there.</p>
+          <p class="err-msg" id="err-phone" hidden>Enter a phone number for the driver.</p>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Delivery</legend>
+
+      <div class="field">
+        <label for="delivery_date">Delivery date <span class="req">required</span></label>
+        <input id="delivery_date" name="delivery_date" type="text" placeholder="DD/MM/YYYY" aria-describedby="delivery-date-hint" data-describedby="delivery-date-hint">
+        <p class="hint" id="delivery-date-hint">Day, month and year, for example 04/11/2026.</p>
+        <p class="err-msg" id="err-delivery_date" hidden>Enter the delivery date as DD/MM/YYYY.</p>
+      </div>
+
+      <div class="field">
+        <label for="site">Site address <span class="req">required</span></label>
+        <textarea id="site" name="site" rows="3" autocomplete="street-address" placeholder="Street, town, postcode" aria-describedby="site-hint" data-describedby="site-hint"></textarea>
+        <p class="hint" id="site-hint">Where the kit is going, including the postcode.</p>
+        <p class="err-msg" id="err-site" hidden>Enter the site address.</p>
+      </div>
+
+      <fieldset>
+        <legend>Hire period <span class="req">required</span></legend>
+        <div class="radios">
+          <span><input type="radio" id="period-day" name="period" value="day"><label for="period-day">One day</label></span>
+          <span><input type="radio" id="period-week" name="period" value="week"><label for="period-week">One week</label></span>
+          <span><input type="radio" id="period-month" name="period" value="month"><label for="period-month">One month</label></span>
+        </div>
+        <p class="err-msg" id="err-period" hidden>Choose a hire period.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Preferred delivery window</legend>
+        <div class="row">
+          <div class="field">
+            <label for="window-day">Day of the month</label>
+            <select id="window-day" name="window-day"><option>01</option><option>02</option><option>03</option></select>
+          </div>
+          <div class="field">
+            <label for="window-half">Morning or afternoon</label>
+            <select id="window-half" name="window-half"><option>AM</option><option>PM</option></select>
+          </div>
+          <div class="field">
+            <label for="window-time">Time slot</label>
+            <select id="window-time" name="window-time"><option>Before 10am</option><option>10am to 2pm</option><option>After 2pm</option></select>
+          </div>
+        </div>
+      </fieldset>
+    </fieldset>
+
+    <fieldset>
+      <legend>Payment</legend>
+
+      <div class="field">
+        <label for="card">Card number <span class="req">required</span></label>
+        <input id="card" name="card" type="text" inputmode="numeric" autocomplete="cc-number" aria-describedby="card-hint" data-describedby="card-hint">
+        <p class="hint" id="card-hint">Sixteen digits, no spaces needed.</p>
+        <p class="err-msg" id="err-card" hidden>Enter the card number.</p>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="expiry">Expiry <span class="req">required</span></label>
+          <input id="expiry" name="expiry" type="text" autocomplete="cc-exp" placeholder="MM/YY" aria-describedby="expiry-hint" data-describedby="expiry-hint">
+          <p class="hint" id="expiry-hint">Month and year, as MM/YY.</p>
+          <p class="err-msg" id="err-expiry" hidden>Enter the expiry date as MM/YY.</p>
+        </div>
+        <div class="field">
+          <label for="cvc">Security code <span class="req">required</span></label>
+          <input id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" aria-describedby="cvc-hint" data-describedby="cvc-hint">
+          <p class="hint" id="cvc-hint">The three digits on the back of the card.</p>
+          <p class="err-msg" id="err-cvc" hidden>Enter the three digit security code.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="captcha">Security check <span class="req">required</span></label>
+        <div class="captcha">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='44'%3E%3Crect width='150' height='44' fill='%23eef2f7'/%3E%3Ctext x='12' y='30' font-family='monospace' font-size='22' fill='%236b7684'%3E7K4QP9%3C/text%3E%3C/svg%3E" width="150" height="44" alt="Security code 7K4QP9">
+          <input id="captcha" name="captcha" type="text" placeholder="Type the code" aria-describedby="captcha-hint" data-describedby="captcha-hint">
+        </div>
+        <p class="hint" id="captcha-hint">Type the six characters shown. If you cannot read the image, call the hire desk on 01332 000000 and we will read it to you.</p>
+        <p class="err-msg" id="err-captcha" hidden>Type the security code, or call the hire desk for it.</p>
+      </div>
+    </fieldset>
+
+    <button class="primary" type="submit">Get a quote</button>
+    <button class="link" type="reset">Clear form</button>
+  </form>
+
+  <section aria-labelledby="terms-heading">
+    <h2 id="terms-heading">Hire terms at a glance</h2>
+    <p>Fuel is supplied full and must be returned full. Damage waiver is 12% of the hire charge. Late returns are charged at the daily rate.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="inner">&copy; Bulk Hire &amp; Tools &middot; <a href="/legal/accessibility">Accessibility</a></div>
+</footer>
+
+<script>
+  var form = document.getElementById('quote');
+  var summary = document.getElementById('error-summary');
+  var summaryList = document.getElementById('error-summary-list');
+
+  var rules = [
+    { name: 'postcode', label: 'Delivery postcode', message: 'Enter your delivery postcode.' },
+    { name: 'name', label: 'Site contact name', message: 'Enter the site contact name.' },
+    { name: 'email', label: 'Email address', message: 'Enter an email address we can send the quote to.' },
+    { name: 'phone', label: 'Phone number', message: 'Enter a phone number for the driver.' },
+    { name: 'delivery_date', label: 'Delivery date', message: 'Enter the delivery date as DD/MM/YYYY.' },
+    { name: 'site', label: 'Site address', message: 'Enter the site address.' },
+    { name: 'period', label: 'Hire period', message: 'Choose a hire period.' },
+    { name: 'card', label: 'Card number', message: 'Enter the card number.' },
+    { name: 'expiry', label: 'Expiry', message: 'Enter the expiry date as MM/YY.' },
+    { name: 'cvc', label: 'Security code', message: 'Enter the three digit security code.' },
+    { name: 'captcha', label: 'Security check', message: 'Type the security code, or call the hire desk for it.' }
+  ];
+
+  function elementsOf(name) {
+    var found = form.elements[name];
+    if (!found) { return []; }
+    return found.length && !found.tagName ? Array.prototype.slice.call(found) : [found];
+  }
+
+  function valueOf(name) {
+    return elementsOf(name).map(function (el) {
+      if (el.type === 'radio' || el.type === 'checkbox') { return el.checked ? el.value : ''; }
+      return el.value ? el.value.trim() : '';
+    }).join('');
+  }
+
+  function markInvalid(name, invalid) {
+    var message = document.getElementById('err-' + name);
+    elementsOf(name).forEach(function (el) {
+      var base = el.getAttribute('data-describedby');
+      if (invalid) {
+        el.setAttribute('aria-invalid', 'true');
+        el.classList.add('error');
+        if (base) { el.setAttribute('aria-describedby', base + ' err-' + name); }
+      } else {
+        el.removeAttribute('aria-invalid');
+        el.classList.remove('error');
+        if (base) { el.setAttribute('aria-describedby', base); }
+      }
+    });
+    if (message) {
+      if (invalid) { message.removeAttribute('hidden'); }
+      else { message.setAttribute('hidden', ''); }
+    }
+  }
+
+  rules.forEach(function (rule) {
+    elementsOf(rule.name).forEach(function (el) {
+      el.addEventListener('input', function () {
+        if (valueOf(rule.name) !== '') { markInvalid(rule.name, false); }
+      });
+      el.addEventListener('change', function () {
+        if (valueOf(rule.name) !== '') { markInvalid(rule.name, false); }
+      });
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    summaryList.innerHTML = '';
+    var firstProblem = null;
+
+    rules.forEach(function (rule) {
+      var invalid = valueOf(rule.name) === '';
+      markInvalid(rule.name, invalid);
+      if (invalid) {
+        var target = elementsOf(rule.name)[0];
+        if (!firstProblem) { firstProblem = target; }
+        var item = document.createElement('li');
+        var link = document.createElement('a');
+        link.href = '#' + target.id;
+        link.textContent = rule.label + ': ' + rule.message;
+        item.appendChild(link);
+        summaryList.appendChild(item);
+      }
+    });
+
+    if (firstProblem) {
+      summary.removeAttribute('hidden');
+      summary.focus();
+    } else {
+      summary.setAttribute('hidden', '');
+      summaryList.innerHTML = '';
+    }
+  });
+
+  summaryList.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+      e.preventDefault();
+      var target = document.getElementById(e.target.getAttribute('href').slice(1));
+      if (target) { target.focus(); }
+    }
+  });
+
+  form.addEventListener('reset', function () {
+    rules.forEach(function (rule) { markInvalid(rule.name, false); });
+    summary.setAttribute('hidden', '');
+    summaryList.innerHTML = '';
+  });
+</script>
+
+</body>
+</html>

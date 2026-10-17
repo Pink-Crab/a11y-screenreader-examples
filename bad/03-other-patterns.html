@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home</title>
+<!--
+  MOCK SITE - DELIBERATELY INACCESSIBLE. Do not fix; it exists to demonstrate failures.
+
+  Page 3 of 3. Theme: a few other patterns, in five sections.
+
+  1. THINGS WITH NO NAME - logo link with no alt, icon-only basket and account buttons, three
+     product images with no alt, three "Read more" links all pointing at "#".
+  2. FIELDS THAT ARE NOT LABELLED - visible text that looks exactly like a label but is a span,
+     a field with no visible text at all, an unnamed calendar button, required marked by an
+     asterisk only.
+  3. ERRORS AND STATUS NEVER ANNOUNCED - validation only turns borders red, the message goes
+     into a plain div, an empty aria-live sits unused beside it, basket confirmation is silent,
+     the availability bar has no role or value.
+  4. LIVE REGIONS THAT WILL NOT STOP - assertive countdown rewritten every second, role="alert"
+     on static marketing copy.
+  5. STRUCTURE - title "Home", a page title that is a div and not a heading, no h1, an h5 used
+     as styling, French and Spanish quotes with no lang, a table with no caption/th/scope.
+
+  WCAG 2.2: 1.1.1, 4.1.2, 2.4.4, 3.3.2, 1.3.1, 3.3.1, 4.1.3, 2.4.2, 2.4.6, 3.1.2, 1.3.1.
+
+  The page's own copy carries the story, in short sentences sitting where the problem is.
+-->
+<style>
+  :root { --ink:#1d2733; --muted:#6b7684; --line:#d5dbe3; --brand:#0b5cab; --bg:#f6f8fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); }
+  a { color:var(--brand); }
+  .inner { max-width:1000px; margin:0 auto; padding:0 16px; }
+  .utility { background:#083f77; color:#cfe0f2; font-size:14px; padding:8px 0; }
+  .utility .inner { display:flex; justify-content:space-between; gap:16px; }
+  .utility a { color:#fff; }
+  .banner { background:#fff3cd; border-bottom:1px solid #e3d39a; padding:10px 0; font-weight:600; }
+  header.masthead { border-bottom:1px solid var(--line); padding:14px 0; }
+  header.masthead .inner { display:flex; align-items:center; gap:18px; }
+  .tools { margin-left:auto; display:flex; gap:8px; }
+  .icon { background:#fff; border:1px solid var(--line); padding:8px; cursor:pointer; line-height:0; }
+  nav.main a { margin-right:14px; text-decoration:none; color:var(--ink); }
+  main { padding:24px 0 72px; }
+  /* Looks like the page title. Is not a heading. */
+  .looks-like-a-title { font-size:28px; font-weight:700; margin:0 0 6px; }
+  h2 { font-size:22px; margin:30px 0 12px; }
+  h3 { font-size:18px; margin:0 0 8px; }
+  h5 { font-size:13px; color:var(--muted); font-weight:400; margin:22px 0 6px; }
+  .cards { display:flex; gap:16px; }
+  .card { flex:1; border:1px solid var(--line); padding:12px; position:relative; }
+  .card img { width:100%; height:auto; display:block; margin-bottom:10px; }
+  .card .heart { position:absolute; top:16px; right:16px; }
+  .quote { border-left:3px solid var(--line); padding-left:12px; color:#33404f; }
+  table.rates { border-collapse:collapse; width:100%; margin-top:8px; }
+  table.rates td { border:1px solid var(--line); padding:8px 10px; }
+  .bar { height:10px; background:#e7edf4; border:1px solid var(--line); margin-top:8px; }
+  .bar span { display:block; height:100%; background:#0b5cab; width:35%; }
+  .toast { margin-top:12px; min-height:22px; font-weight:600; color:#0b5cab; }
+  .row { display:flex; gap:14px; }
+  .field { margin-bottom:16px; flex:1; }
+  .field input, .field textarea { width:100%; padding:10px 12px; border:1px solid var(--line); font:inherit; }
+  .field input::placeholder { color:#8d97a3; }
+  /* Looks exactly like a label. Is a span. */
+  .looks-like-a-label { display:block; font-size:14px; margin-bottom:5px; }
+  .req { color:#d33; }
+  .datewrap { display:flex; gap:8px; align-items:center; }
+  .error { border-color:#d33 !important; background:#fff6f6; }
+  button.primary { background:#0b5cab; color:#fff; border:0; padding:12px 22px; font:inherit; font-weight:600; cursor:pointer; }
+  .summary { margin-top:16px; font-size:14px; color:#d33; }
+  footer { border-top:1px solid var(--line); background:var(--bg); font-size:14px; color:var(--muted); padding:20px 0; }
+</style>
+</head>
+<body>
+
+<div class="utility">
+  <div class="inner">
+    <div id="countdown" role="status" aria-live="assertive">Offer ends in 300 seconds, and this is said every second</div>
+    <div><a href="/stores">Find a branch</a> &middot; <a href="/help">Help</a></div>
+  </div>
+</div>
+
+<div class="banner" role="alert">Spring sale: 20% off all scissor lifts until Friday. This is read out the moment the page opens.</div>
+
+<header class="masthead">
+  <div class="inner">
+    <a href="/"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='32'%3E%3Crect width='160' height='32' fill='%23083f77'/%3E%3C/svg%3E" width="160" height="32"></a>
+    <nav class="main" aria-label="Main">
+      <a href="/powered-access">Powered access</a>
+      <a href="/earthmoving">Earthmoving</a>
+      <a href="/power">Power</a>
+      <a href="/brands">Brands</a>
+    </nav>
+    <div class="tools">
+      <button class="icon" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z" fill="#1d2733"/></svg></button>
+      <button class="icon" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="#1d2733"/><rect x="5" y="14" width="14" height="7" fill="#1d2733"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="inner">
+
+    <div class="looks-like-a-title">Silent title</div>
+    <p>It looks like the page title. It is a div, so nothing is announced for it.</p>
+
+    <h2>Today's offers</h2>
+    <div class="cards">
+      <div class="card">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='140'%3E%3Crect width='240' height='140' fill='%23e7edf4'/%3E%3C/svg%3E" width="240" height="140">
+        <button class="icon heart" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 20l-8-7 3-6 5 3 5-3 3 6z" fill="#d33"/></svg></button>
+        <h3>Scissor lift, 19ft</h3>
+        <p>&pound;68 per day, delivered. The picture above has no alt text, so it is passed over in silence.</p>
+        <p><a href="#">Read more</a></p>
+      </div>
+      <div class="card">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='140'%3E%3Crect width='240' height='140' fill='%23e7edf4'/%3E%3C/svg%3E" width="240" height="140">
+        <button class="icon heart" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 20l-8-7 3-6 5 3 5-3 3 6z" fill="#d33"/></svg></button>
+        <h3>Mini excavator, 1.5t</h3>
+        <p>&pound;112 per day, delivered. The heart button on this card is a red heart shape and nothing else.</p>
+        <p><a href="#">Read more</a></p>
+      </div>
+      <div class="card">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='140'%3E%3Crect width='240' height='140' fill='%23e7edf4'/%3E%3C/svg%3E" width="240" height="140">
+        <button class="icon heart" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 20l-8-7 3-6 5 3 5-3 3 6z" fill="#d33"/></svg></button>
+        <h3>Petrol generator, 3kVA</h3>
+        <p>&pound;41 per day, delivered. All three of these links are read as read more, link.</p>
+        <p><a href="#">Read more</a></p>
+      </div>
+    </div>
+    <p>The logo and the two buttons at the top of the page carry no names at all.</p>
+
+    <h5>Silent heading. VAT included on all prices, delivery free within 20 miles of a branch.</h5>
+
+    <h2>What customers say</h2>
+    <p class="quote">&laquo; Livraison rapide et &eacute;quipe tr&egrave;s r&eacute;active, je recommande. &raquo;</p>
+    <p class="quote">&laquo; El servicio fue excelente y el precio muy razonable. &raquo;</p>
+    <p>One of those is French and one is Spanish. Neither says so, so both are read as English.</p>
+
+    <h2>Hire rates</h2>
+    <table class="rates">
+      <tr><td>Scissor lift, 19ft</td><td>1 day</td><td>&pound;68</td><td>&pound;95</td></tr>
+      <tr><td>Scissor lift, 26ft</td><td>1 day</td><td>&pound;94</td><td>&pound;128</td></tr>
+      <tr><td>Mini excavator, 1.5t</td><td>1 day</td><td>&pound;112</td><td>&pound;150</td></tr>
+      <tr><td>Petrol generator, 3kVA</td><td>1 day</td><td>&pound;41</td><td>&pound;58</td></tr>
+    </table>
+    <p>No headings on that table, so every price is read with nothing attached to it.</p>
+
+    <h2>Check availability for your dates</h2>
+    <div class="bar"><span></span></div>
+    <p><button class="primary" type="button" id="add">Add scissor lift to basket</button></p>
+    <div class="toast" id="toast"></div>
+    <p id="toast-note">That bar is a div with a width, and the basket message appears without being announced.</p>
+
+    <h2>Get a quote</h2>
+    <form id="quick-quote" action="/quote" method="post" novalidate>
+
+      <div class="row">
+        <div class="field">
+          <span class="looks-like-a-label">Delivery postcode</span>
+          <input type="text" name="postcode" placeholder="DE1 1AA">
+        </div>
+        <div class="field">
+          <input type="text" name="name" placeholder="No label here, so this box is announced as edit text, blank">
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="looks-like-a-label">Email address</span>
+        <input type="email" name="email" placeholder="name@example.com">
+      </div>
+
+      <div class="field">
+        <span class="looks-like-a-label">Delivery date <span class="req">*</span></span>
+        <div class="datewrap">
+          <input type="text" name="delivery_date" placeholder="DD/MM/YYYY">
+          <button class="icon" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" fill="#6b7684"/></svg></button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="looks-like-a-label">Site address <span class="req">*</span></span>
+        <textarea name="site" rows="3" placeholder="Street, town, postcode"></textarea>
+      </div>
+
+      <button class="primary" type="submit">Request a quote</button>
+
+      <div class="summary" id="quote-summary"></div>
+      <div aria-live="polite" id="quote-live"></div>
+    </form>
+    <p>Delivery postcode, email address, delivery date and site address only look like labels. The asterisks mean required to you and nothing to a screen reader.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">&copy; Bulk Hire &amp; Tools &middot; <a href="/legal/accessibility">Accessibility</a></div>
+</footer>
+
+<script>
+  var seconds = 300;
+  var countdown = document.getElementById('countdown');
+  setInterval(function () {
+    seconds = seconds > 0 ? seconds - 1 : 300;
+    countdown.textContent = 'Offer ends in ' + seconds + ' seconds, and this is said every second';
+  }, 1000);
+
+  document.getElementById('add').addEventListener('click', function () {
+    document.getElementById('toast').textContent = 'Added to basket.';
+  });
+
+  document.getElementById('quick-quote').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = false;
+    this.querySelectorAll('input, textarea').forEach(function (el) {
+      el.classList.remove('error');
+      if (!el.value.trim()) { el.classList.add('error'); bad = true; }
+    });
+    document.getElementById('quote-summary').textContent = bad
+      ? 'Please correct the highlighted fields. The borders went red and nothing was announced.'
+      : 'Request sent, quietly.';
+  });
+</script>
+
+</body>
+</html>

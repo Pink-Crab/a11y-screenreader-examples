@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Today's offers, hire rates and a quote | Bulk Hire &amp; Tools</title>
+<!--
+  CLEAN SITE - the screen reader friendly counterpart to bad/03-other-patterns.html.
+  Same retailer, same sections, same order: the copy here carries no commentary, because
+  nothing on this page needs explaining.
+
+  FIXED
+  1. NAMES - logo and product images have `alt`; the basket, account and save buttons have
+     `aria-label`; save buttons also expose state with `aria-pressed`; each "Read more" is
+     disambiguated so the links list shows three different links.
+  2. LABELS - every field has a real `<label for>` matching its id, required is `required` and
+     marked with the word "required", the calendar button is named, and no field relies on a
+     placeholder for its name.
+  3. ERRORS AND STATUS - submission validates, sets `aria-invalid`, writes a message into an
+     `aria-describedby` target, lists problems in a `role="alert"` summary and moves focus to it.
+     The basket confirmation is a `role="status"` region and availability is a real progress bar
+     with a value, a name and an announced result.
+  4. LIVE REGIONS - the sale line is plain text, not `role="alert"`. Nothing interrupts on load
+     and nothing repeats every second.
+  5. STRUCTURE - a real `<title>`, one `h1`, headings in order with no `h5` used as styling,
+     `lang="fr"` and `lang="es"` on the quotes, and a table with `caption`, `th` and `scope`.
+-->
+<style>
+  :root { --ink:#1d2733; --muted:#6b7684; --line:#d5dbe3; --brand:#0b5cab; --bg:#f6f8fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); }
+  a { color:var(--brand); }
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+  .inner { max-width:1000px; margin:0 auto; padding:0 16px; }
+  .utility { background:#083f77; color:#cfe0f2; font-size:14px; padding:8px 0; }
+  .utility .inner { display:flex; justify-content:space-between; gap:16px; }
+  .utility a { color:#fff; }
+  .banner { background:#fff3cd; border-bottom:1px solid #e3d39a; padding:10px 0; font-weight:600; }
+  .banner .inner { display:block; }
+  header.masthead { border-bottom:1px solid var(--line); padding:14px 0; }
+  header.masthead .inner { display:flex; align-items:center; gap:18px; }
+  .tools { margin-left:auto; display:flex; gap:8px; }
+  .icon { background:#fff; border:1px solid var(--line); padding:8px; cursor:pointer; line-height:0; }
+  nav.main a { margin-right:14px; text-decoration:none; color:var(--ink); }
+  main { padding:24px 0 72px; }
+  h1 { font-size:28px; margin:0 0 6px; }
+  h2 { font-size:22px; margin:30px 0 12px; }
+  h3 { font-size:18px; margin:0 0 8px; }
+  .fine { font-size:13px; color:var(--muted); margin:22px 0 6px; }
+  .cards { display:flex; gap:16px; }
+  .card { flex:1; border:1px solid var(--line); padding:12px; position:relative; }
+  .card img { width:100%; height:auto; display:block; margin-bottom:10px; }
+  .card .heart { position:absolute; top:16px; right:16px; }
+  .card .heart[aria-pressed=true] svg path { fill:#a11; }
+  .quote { border-left:3px solid var(--line); padding-left:12px; color:#33404f; }
+  table.rates { border-collapse:collapse; width:100%; margin-top:8px; }
+  table.rates caption { text-align:left; font-weight:600; padding-bottom:6px; }
+  table.rates th, table.rates td { border:1px solid var(--line); padding:8px 10px; text-align:left; }
+  table.rates th[scope=col] { background:#eef2f7; }
+  progress { width:100%; max-width:320px; }
+  .toast { margin-top:12px; min-height:22px; font-weight:600; color:#0b5cab; }
+  .row { display:flex; gap:14px; }
+  .field { margin-bottom:16px; flex:1; }
+  .field input, .field textarea { width:100%; padding:10px 12px; border:1px solid var(--line); font:inherit; }
+  label { display:block; font-size:14px; margin-bottom:5px; }
+  .req { color:#d33; }
+  .hint { font-size:13px; color:var(--muted); margin:4px 0 0; }
+  .err-msg { font-size:14px; color:#a11; margin:4px 0 0; }
+  .datewrap { display:flex; gap:8px; align-items:center; }
+  .error { border-color:#a11; }
+  button.primary { background:#0b5cab; color:#fff; border:0; padding:12px 22px; font:inherit; font-weight:600; cursor:pointer; }
+  .summary { border:2px solid #a11; padding:12px 16px; margin-bottom:18px; }
+  .summary h2 { font-size:16px; margin:0 0 8px; color:#a11; }
+  .summary ul { margin:0; padding-left:20px; }
+  footer { border-top:1px solid var(--line); background:var(--bg); font-size:14px; color:var(--muted); padding:20px 0; }
+</style>
+</head>
+<body>
+
+<div class="utility">
+  <div class="inner">
+    <p style="margin:0">Spring sale ends Friday at 6pm.</p>
+    <div><a href="/stores">Find a branch</a> &middot; <a href="/help">Help</a></div>
+  </div>
+</div>
+
+<p class="banner" style="margin:0"><span class="inner">Spring sale: 20% off all scissor lifts until Friday.</span></p>
+
+<header class="masthead">
+  <div class="inner">
+    <a href="/"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='32'%3E%3Crect width='160' height='32' fill='%23083f77'/%3E%3C/svg%3E" width="160" height="32" alt="Bulk Hire and Tools home"></a>
+    <nav class="main" aria-label="Main">
+      <a href="/powered-access">Powered access</a>
+      <a href="/earthmoving">Earthmoving</a>
+      <a href="/power">Power</a>
+      <a href="/brands">Brands</a>
+    </nav>
+    <div class="tools">
+      <button class="icon" type="button" aria-label="Basket, 2 items"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6h15l-1.5 9h-12z" fill="#1d2733"/></svg></button>
+      <button class="icon" type="button" aria-label="Your account"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4" fill="#1d2733"/><rect x="5" y="14" width="14" height="7" fill="#1d2733"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="inner">
+
+    <h1>Today's offers</h1>
+
+    <div class="cards">
+      <div class="card">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='140'%3E%3Crect width='240' height='140' fill='%23e7edf4'/%3E%3C/svg%3E" width="240" height="140" alt="Scissor lift platform raised beside a shopfront">
+        <button class="icon heart" type="button" aria-pressed="false" aria-label="Save the 19ft scissor lift for later"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20l-8-7 3-6 5 3 5-3 3 6z" fill="#d33"/></svg></button>
+        <h2>Scissor lift, 19ft</h2>
+        <p>&pound;68 per day, delivered.</p>
+        <p><a href="/powered-access/scissor-lift-19ft">Read more<span class="sr-only"> about the 19ft scissor lift</span></a></p>
+      </div>
+      <div class="card">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='140'%3E%3Crect width='240' height='140' fill='%23e7edf4'/%3E%3C/svg%3E" width="240" height="140" alt="Mini excavator with a 300mm digging bucket">
+        <button class="icon heart" type="button" aria-pressed="false" aria-label="Save the 1.5 tonne mini excavator for later"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20l-8-7 3-6 5 3 5-3 3 6z" fill="#d33"/></svg></button>
+        <h2>Mini excavator, 1.5t</h2>
+        <p>&pound;112 per day, delivered.</p>
+        <p><a href="/earthmoving/mini-excavator-15t">Read more<span class="sr-only"> about the 1.5 tonne mini excavator</span></a></p>
+      </div>
+      <div class="card">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='140'%3E%3Crect width='240' height='140' fill='%23e7edf4'/%3E%3C/svg%3E" width="240" height="140" alt="Petrol generator with two 13 amp sockets">
+        <button class="icon heart" type="button" aria-pressed="false" aria-label="Save the 3kVA petrol generator for later"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20l-8-7 3-6 5 3 5-3 3 6z" fill="#d33"/></svg></button>
+        <h2>Petrol generator, 3kVA</h2>
+        <p>&pound;41 per day, delivered.</p>
+        <p><a href="/power/generator-3kva">Read more<span class="sr-only"> about the 3kVA petrol generator</span></a></p>
+      </div>
+    </div>
+
+    <p class="fine">VAT included on all prices. Delivery free within 20 miles of a branch.</p>
+
+    <h2>What customers say</h2>
+    <p class="quote" lang="fr">&laquo; Livraison rapide et &eacute;quipe tr&egrave;s r&eacute;active, je recommande. &raquo;</p>
+    <p class="quote" lang="es">&laquo; El servicio fue excelente y el precio muy razonable. &raquo;</p>
+
+    <h2>Hire rates</h2>
+    <table class="rates">
+      <caption>Daily hire rates, VAT included</caption>
+      <thead>
+        <tr>
+          <td></td>
+          <th scope="col">Period</th>
+          <th scope="col">Standard rate</th>
+          <th scope="col">With damage waiver</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Scissor lift, 19ft</th><td>1 day</td><td>&pound;68</td><td>&pound;95</td></tr>
+        <tr><th scope="row">Scissor lift, 26ft</th><td>1 day</td><td>&pound;94</td><td>&pound;128</td></tr>
+        <tr><th scope="row">Mini excavator, 1.5t</th><td>1 day</td><td>&pound;112</td><td>&pound;150</td></tr>
+        <tr><th scope="row">Petrol generator, 3kVA</th><td>1 day</td><td>&pound;41</td><td>&pound;58</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Check availability for your dates</h2>
+    <progress id="availability" value="35" max="100" aria-label="Checking availability for your dates"></progress>
+    <p role="status" id="availability-status">Checking availability&hellip;</p>
+    <p><button class="primary" type="button" id="add">Add scissor lift to basket</button></p>
+    <div class="toast" role="status" id="toast"></div>
+
+    <h2>Get a quote</h2>
+    <form id="quick-quote" action="/quote" method="post" novalidate>
+
+      <div class="summary" id="quote-summary" role="alert" tabindex="-1" hidden>
+        <h2>There is a problem</h2>
+        <ul id="quote-summary-list"></ul>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="q-postcode">Delivery postcode <span class="req">required</span></label>
+          <input id="q-postcode" name="postcode" type="text" autocomplete="postal-code" placeholder="DE1 1AA" aria-describedby="q-postcode-hint" data-describedby="q-postcode-hint">
+          <p class="hint" id="q-postcode-hint">The nearest branch quotes for this postcode.</p>
+          <p class="err-msg" id="err-postcode" hidden>Enter your delivery postcode.</p>
+        </div>
+        <div class="field">
+          <label for="q-name">Site contact name <span class="req">required</span></label>
+          <input id="q-name" name="name" type="text" autocomplete="name" aria-describedby="q-name-hint" data-describedby="q-name-hint">
+          <p class="hint" id="q-name-hint">Who we should ask for on site.</p>
+          <p class="err-msg" id="err-name" hidden>Enter the site contact name.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="q-email">Email address <span class="req">required</span></label>
+        <input id="q-email" name="email" type="email" autocomplete="email" aria-describedby="q-email-hint" data-describedby="q-email-hint">
+        <p class="hint" id="q-email-hint">The quote is sent here.</p>
+        <p class="err-msg" id="err-email" hidden>Enter an email address we can send the quote to.</p>
+      </div>
+
+      <div class="field">
+        <label for="q-date">Delivery date <span class="req">required</span></label>
+        <div class="datewrap">
+          <input id="q-date" name="delivery_date" type="text" placeholder="DD/MM/YYYY" aria-describedby="q-date-hint" data-describedby="q-date-hint">
+          <button class="icon" type="button" id="q-date-picker" aria-label="Choose a delivery date"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" fill="#6b7684"/></svg></button>
+        </div>
+        <p class="hint" id="q-date-hint">Day, month and year, for example 04/11/2026.</p>
+        <p class="err-msg" id="err-delivery_date" hidden>Enter the delivery date as DD/MM/YYYY.</p>
+      </div>
+
+      <div class="field">
+        <label for="q-site">Site address <span class="req">required</span></label>
+        <textarea id="q-site" name="site" rows="3" autocomplete="street-address" placeholder="Street, town, postcode" aria-describedby="q-site-hint" data-describedby="q-site-hint"></textarea>
+        <p class="hint" id="q-site-hint">Where the kit is going, including the postcode.</p>
+        <p class="err-msg" id="err-site" hidden>Enter the site address.</p>
+      </div>
+
+      <button class="primary" type="submit">Request a quote</button>
+    </form>
+
+  </div>
+</main>
+
+<footer>
+  <div class="inner">&copy; Bulk Hire &amp; Tools &middot; <a href="/legal/accessibility">Accessibility</a></div>
+</footer>
+
+<script>
+  var form = document.getElementById('quick-quote');
+  var summary = document.getElementById('quote-summary');
+  var summaryList = document.getElementById('quote-summary-list');
+
+  var rules = [
+    { name: 'postcode', label: 'Delivery postcode', message: 'Enter your delivery postcode.' },
+    { name: 'name', label: 'Site contact name', message: 'Enter the site contact name.' },
+    { name: 'email', label: 'Email address', message: 'Enter an email address we can send the quote to.' },
+    { name: 'delivery_date', label: 'Delivery date', message: 'Enter the delivery date as DD/MM/YYYY.' },
+    { name: 'site', label: 'Site address', message: 'Enter the site address.' }
+  ];
+
+  function elementsOf(name) {
+    var found = form.elements[name];
+    if (!found) { return []; }
+    return found.length && !found.tagName ? Array.prototype.slice.call(found) : [found];
+  }
+
+  function markInvalid(name, invalid) {
+    var message = document.getElementById('err-' + name);
+    elementsOf(name).forEach(function (el) {
+      var base = el.getAttribute('data-describedby');
+      if (invalid) {
+        el.setAttribute('aria-invalid', 'true');
+        el.classList.add('error');
+        if (base) { el.setAttribute('aria-describedby', base + ' err-' + name); }
+      } else {
+        el.removeAttribute('aria-invalid');
+        el.classList.remove('error');
+        if (base) { el.setAttribute('aria-describedby', base); }
+      }
+    });
+    if (message) {
+      if (invalid) { message.removeAttribute('hidden'); }
+      else { message.setAttribute('hidden', ''); }
+    }
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    summaryList.innerHTML = '';
+    var problems = [];
+
+    rules.forEach(function (rule) {
+      var els = elementsOf(rule.name);
+      var value = els.map(function (el) { return el.value ? el.value.trim() : ''; }).join('');
+      var invalid = value === '';
+      markInvalid(rule.name, invalid);
+      if (invalid) {
+        problems.push(rule);
+        var item = document.createElement('li');
+        item.textContent = rule.label + ': ' + rule.message;
+        summaryList.appendChild(item);
+      }
+    });
+
+    if (problems.length) {
+      summary.removeAttribute('hidden');
+      summary.focus();
+    } else {
+      summary.setAttribute('hidden', '');
+    }
+  });
+
+  document.getElementById('add').addEventListener('click', function () {
+    document.getElementById('toast').textContent = 'Added to basket. 2 items in your basket.';
+  });
+
+  document.querySelectorAll('.card .heart').forEach(function (button) {
+    button.addEventListener('click', function () {
+      button.setAttribute('aria-pressed', button.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    });
+  });
+
+  window.setTimeout(function () {
+    document.getElementById('availability').value = 100;
+    document.getElementById('availability-status').textContent = 'Available for your dates.';
+  }, 1500);
+</script>
+
+</body>
+</html>

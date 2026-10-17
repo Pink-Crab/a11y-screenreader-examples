@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulk Hire &amp; Tools | Tool and plant hire, 24 branches</title>
+<!--
+  MOCK SITE - DELIBERATELY INACCESSIBLE. Do not fix; it exists to demonstrate failures.
+
+  Page 1 of 3. Theme: an overly complex mega menu. Nothing else - no form, no dialog, no
+  carousel. The navigation is the whole story.
+
+  WHAT IS BROKEN
+  - 76 tab stops before the first line of content: 12 utility links, 6 top-level menu items, a
+    permanently expanded mega panel of 30 links, and a 26-link A-Z brand index. Thirty presses
+    of Tab leaves you inside the navigation.
+  - The "Hire equipment" panel is hard-coded open (class "is-open"). There is no toggle button,
+    no aria-expanded and no way to collapse it, so its 30 links are tab stops on every page.
+  - The other five panels are revealed by CSS `:hover` only: no focus style, no click handler,
+    no aria-expanded/aria-controls, no aria-haspopup. The ~45 links inside them are not
+    focusable and never appear in a screen reader's links list, so they effectively do not
+    exist - the menu promises categories it never delivers.
+  - No skip link, and no landmarks (no header/nav/main/footer, no roles), so there is no bypass
+    mechanism of any kind.
+  - The A-Z brand index is 26 single-letter links in one flat list with no headings between
+    them: "A, link. B, link. C, link".
+  - Nothing exposes state: no aria-expanded, no aria-current, no group headings announced for
+    the panels, so a screen reader user cannot tell a collapsed panel from a plain link.
+
+  WCAG 2.2: 2.1.1 Keyboard, 2.4.1 Bypass Blocks, 2.4.3 Focus Order, 1.3.1 Info and
+  Relationships, 4.1.2 Name Role Value.
+
+  Screen reader / keyboard experience
+  - Tab, 30 times: still in navigation. Tab, 60 times: still in navigation (the brand index).
+  - The rotor/landmarks list is empty, so there is nothing to jump to.
+  - Five of the six categories can never be opened without a mouse.
+-->
+<style>
+  :root { --ink:#1d2733; --muted:#6b7684; --line:#d5dbe3; --brand:#0b5cab; --bg:#f6f8fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); }
+  a { color:var(--brand); }
+  .utility { background:#0f1b2a; font-size:13px; }
+  .utility ul { display:flex; flex-wrap:wrap; gap:0 16px; list-style:none; margin:0 auto; padding:8px 16px; max-width:1180px; }
+  .utility a { color:#cfd8e3; text-decoration:none; }
+  .masthead { display:flex; align-items:center; gap:16px; max-width:1180px; margin:0 auto; padding:14px 16px; }
+  .logo { font-size:20px; font-weight:800; color:#083f77; text-decoration:none; }
+  .masthead .tagline { color:var(--muted); font-size:14px; }
+  .navrow { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--bg); }
+  .navrow > ul { display:flex; flex-wrap:wrap; list-style:none; margin:0 auto; padding:0 16px; max-width:1180px; }
+  .navrow > ul > li { position:relative; }
+  .navrow > ul > li > a { display:block; padding:13px 15px; font-weight:600; color:var(--ink); text-decoration:none; }
+  .navrow > ul > li > a:hover { background:#fff; }
+  /* Five panels open on hover only. Keyboard focus does nothing at all. */
+  .panel { display:none; position:absolute; left:0; top:100%; z-index:20; width:720px; padding:18px 22px 4px; border:1px solid var(--line); background:#fff; box-shadow:0 18px 30px rgba(15,27,42,.12); }
+  .navrow > ul > li:hover > .panel { display:grid; grid-template-columns:repeat(3,1fr); gap:0 26px; }
+  /* The sixth panel, rendered on every page with no control to close it. */
+  .mega { border-bottom:1px solid var(--line); background:#fff; }
+  .mega > .panel { display:grid; grid-template-columns:repeat(4,1fr); gap:0 26px; max-width:1180px; margin:0 auto; padding:18px 16px 4px; position:static; width:auto; border:0; box-shadow:none; }
+  .panel h3 { margin:6px 0 7px; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .panel ul { list-style:none; margin:0 0 14px; padding:0; }
+  .panel li { margin:0 0 5px; }
+  .panel a { text-decoration:none; }
+  .strip { border-bottom:1px solid var(--line); background:#eef2f7; }
+  .strip .inner { max-width:1180px; margin:0 auto; padding:12px 16px; }
+  .strip h2 { margin:0 0 8px; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .az { display:flex; flex-wrap:wrap; gap:2px 10px; list-style:none; margin:0; padding:0; }
+  .az a { text-decoration:none; }
+  .wrap { max-width:1180px; margin:0 auto; padding:22px 16px 72px; }
+  h1 { font-size:30px; margin:0 0 8px; }
+  .lede { color:#3c4756; max-width:68ch; }
+  footer { border-top:1px solid var(--line); background:var(--bg); }
+  footer .inner { display:grid; grid-template-columns:repeat(4,1fr); gap:22px; max-width:1180px; margin:0 auto; padding:24px 16px; }
+  footer h2 { font-size:14px; margin:0 0 10px; }
+  footer ul { list-style:none; margin:0; padding:0; }
+  footer li { margin:0 0 6px; }
+</style>
+</head>
+<body>
+
+<div class="utility">
+  <ul>
+    <li><a href="/branches">Find a branch</a></li>
+    <li><a href="/trade">Trade account</a></li>
+    <li><a href="/credit">Credit application</a></li>
+    <li><a href="/delivery">Delivery &amp; collection</a></li>
+    <li><a href="/returns">Returns</a></li>
+    <li><a href="/safety-data">Safety data sheets</a></li>
+    <li><a href="/track">Track my order</a></li>
+    <li><a href="/gift-cards">Gift cards</a></li>
+    <li><a href="/blog">Workshop blog</a></li>
+    <li><a href="/careers">Careers</a></li>
+    <li><a href="/contact">Contact us</a></li>
+    <li><a href="/help">Help centre</a></li>
+  </ul>
+</div>
+
+<div class="masthead">
+  <a class="logo" href="/">Bulk Hire &amp; Tools</a>
+  <span class="tagline">Same-day tool and plant hire across the East Midlands</span>
+</div>
+
+<div class="navrow">
+  <ul>
+    <li>
+      <a href="/hire">Hire equipment</a>
+      <div class="panel">
+        <div>
+          <h3>Powered access</h3>
+          <ul>
+            <li><a href="/hire/scissor-lifts">Scissor lifts</a></li>
+            <li><a href="/hire/boom-lifts">Boom lifts</a></li>
+            <li><a href="/hire/mast-lifts">Mast lifts</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Earthmoving</h3>
+          <ul>
+            <li><a href="/hire/mini-excavators">Mini excavators</a></li>
+            <li><a href="/hire/dumpers">Dumpers</a></li>
+            <li><a href="/hire/telehandlers">Telehandlers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Power</h3>
+          <ul>
+            <li><a href="/hire/generators">Generators</a></li>
+            <li><a href="/hire/lighting">Site lighting</a></li>
+            <li><a href="/hire/heaters">Heaters</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a href="/buy">Buy tools</a>
+      <div class="panel">
+        <div>
+          <h3>Cordless</h3>
+          <ul>
+            <li><a href="/buy/drills">Drills</a></li>
+            <li><a href="/buy/impact-drivers">Impact drivers</a></li>
+            <li><a href="/buy/grinders">Grinders</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Hand tools</h3>
+          <ul>
+            <li><a href="/buy/spanners">Spanners</a></li>
+            <li><a href="/buy/screwdrivers">Screwdrivers</a></li>
+            <li><a href="/buy/storage">Tool storage</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Safety</h3>
+          <ul>
+            <li><a href="/buy/boots">Safety boots</a></li>
+            <li><a href="/buy/gloves">Gloves</a></li>
+            <li><a href="/buy/eye-protection">Eye protection</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a href="/branches">Branches</a>
+      <div class="panel">
+        <div>
+          <h3>East Midlands</h3>
+          <ul>
+            <li><a href="/branches/derby">Derby</a></li>
+            <li><a href="/branches/leicester">Leicester</a></li>
+            <li><a href="/branches/nottingham">Nottingham</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Staffordshire</h3>
+          <ul>
+            <li><a href="/branches/stoke">Stoke</a></li>
+            <li><a href="/branches/tamworth">Tamworth</a></li>
+            <li><a href="/branches/burton">Burton</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Services</h3>
+          <ul>
+            <li><a href="/services/repairs">Repairs</a></li>
+            <li><a href="/services/calibration">Calibration</a></li>
+            <li><a href="/services/fuel">Fuel</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a href="/trade">Trade account</a>
+      <div class="panel">
+        <div>
+          <h3>Open an account</h3>
+          <ul>
+            <li><a href="/trade/apply">Apply online</a></li>
+            <li><a href="/trade/credit">30-day credit</a></li>
+            <li><a href="/trade/cash">Cash account</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Manage</h3>
+          <ul>
+            <li><a href="/trade/invoices">Invoices</a></li>
+            <li><a href="/trade/hire-log">Hire log</a></li>
+            <li><a href="/trade/users">Add users</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Benefits</h3>
+          <ul>
+            <li><a href="/trade/pricing">Trade pricing</a></li>
+            <li><a href="/trade/events">Trade mornings</a></li>
+            <li><a href="/trade/rewards">Rewards</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a href="/support">Support &amp; safety</a>
+      <div class="panel">
+        <div>
+          <h3>Using our kit</h3>
+          <ul>
+            <li><a href="/support/manuals">Manuals</a></li>
+            <li><a href="/support/how-to">How-to videos</a></li>
+            <li><a href="/support/faults">Report a fault</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Safety</h3>
+          <ul>
+            <li><a href="/support/ppe">PPE guidance</a></li>
+            <li><a href="/support/loler">LOLER inspections</a></li>
+            <li><a href="/support/site-safety">Site safety</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Policies</h3>
+          <ul>
+            <li><a href="/support/terms">Terms of hire</a></li>
+            <li><a href="/support/privacy">Privacy</a></li>
+            <li><a href="/support/accessibility">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a href="/about">About us</a>
+      <div class="panel">
+        <div>
+          <h3>Company</h3>
+          <ul>
+            <li><a href="/about/story">Our story</a></li>
+            <li><a href="/about/sustainability">Sustainability</a></li>
+            <li><a href="/about/news">News</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Work with us</h3>
+          <ul>
+            <li><a href="/about/careers">Careers</a></li>
+            <li><a href="/about/apprenticeships">Apprenticeships</a></li>
+            <li><a href="/about/suppliers">Suppliers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="/about/charity">Charity partners</a></li>
+            <li><a href="/about/sponsorship">Sponsorship</a></li>
+            <li><a href="/about/schools">Schools programme</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- The legacy panel, still rendering on every page, with no control to close it. -->
+<div class="mega is-open">
+  <div class="panel">
+    <div>
+      <h3>Access</h3>
+      <ul>
+        <li><a href="/hire/scissor-lifts">Scissor lifts</a></li>
+        <li><a href="/hire/boom-lifts">Boom lifts</a></li>
+        <li><a href="/hire/mast-lifts">Mast lifts</a></li>
+        <li><a href="/hire/tower-lifts">Tower lifts</a></li>
+        <li><a href="/hire/cherry-pickers">Cherry pickers</a></li>
+        <li><a href="/hire/low-level">Low-level access</a></li>
+      </ul>
+      <h3>Earthmoving</h3>
+      <ul>
+        <li><a href="/hire/mini-excavators">Mini excavators</a></li>
+        <li><a href="/hire/midi-excavators">Midi excavators</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Lifting</h3>
+      <ul>
+        <li><a href="/hire/forklifts">Forklifts</a></li>
+        <li><a href="/hire/pallet-trucks">Pallet trucks</a></li>
+        <li><a href="/hire/gantries">Gantries</a></li>
+        <li><a href="/hire/winches">Winches</a></li>
+        <li><a href="/hire/scaffold-hoists">Scaffold hoists</a></li>
+        <li><a href="/hire/harnesses">Harnesses</a></li>
+      </ul>
+      <h3>Compaction</h3>
+      <ul>
+        <li><a href="/hire/wacker-plates">Wacker plates</a></li>
+        <li><a href="/hire/rollers">Rollers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Power &amp; site</h3>
+      <ul>
+        <li><a href="/hire/generators">Generators</a></li>
+        <li><a href="/hire/site-lighting">Site lighting</a></li>
+        <li><a href="/hire/heaters">Heaters</a></li>
+        <li><a href="/hire/dryers">Dryers</a></li>
+        <li><a href="/hire/dehumidifiers">Dehumidifiers</a></li>
+        <li><a href="/hire/transformers">Transformers</a></li>
+      </ul>
+      <h3>Cleaning</h3>
+      <ul>
+        <li><a href="/hire/pressure-washers">Pressure washers</a></li>
+        <li><a href="/hire/vacuums">Vacuums</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Concrete</h3>
+      <ul>
+        <li><a href="/hire/cement-mixers">Cement mixers</a></li>
+        <li><a href="/hire/breakers">Breakers</a></li>
+        <li><a href="/hire/cutters">Concrete cutters</a></li>
+        <li><a href="/hire/floor-grinders">Floor grinders</a></li>
+        <li><a href="/hire/pokers">Pokers</a></li>
+        <li><a href="/hire/screeds">Screeds</a></li>
+      </ul>
+      <h3>Site kit</h3>
+      <ul>
+        <li><a href="/hire/cable-ramps">Cable ramps</a></li>
+        <li><a href="/hire/site-boxes">Site boxes</a></li>
+      </ul>
+    </div>
+    <p style="grid-column:1/-1;margin:0 0 14px;color:#6b7684">This panel is always open, and nothing on the page closes it. The other five menus open on hover only, so a keyboard never reaches a single link inside them.</p>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="inner">
+    <h2>Shop by brand A-Z</h2>
+    <p style="margin:0 0 8px;font-size:14px;color:#6b7684">Twenty-six links, one letter each, and every one of them before the content starts.</p>
+    <ul class="az">
+      <li><a href="/brands/a">A</a></li><li><a href="/brands/b">B</a></li><li><a href="/brands/c">C</a></li>
+      <li><a href="/brands/d">D</a></li><li><a href="/brands/e">E</a></li><li><a href="/brands/f">F</a></li>
+      <li><a href="/brands/g">G</a></li><li><a href="/brands/h">H</a></li><li><a href="/brands/i">I</a></li>
+      <li><a href="/brands/j">J</a></li><li><a href="/brands/k">K</a></li><li><a href="/brands/l">L</a></li>
+      <li><a href="/brands/m">M</a></li><li><a href="/brands/n">N</a></li><li><a href="/brands/o">O</a></li>
+      <li><a href="/brands/p">P</a></li><li><a href="/brands/q">Q</a></li><li><a href="/brands/r">R</a></li>
+      <li><a href="/brands/s">S</a></li><li><a href="/brands/t">T</a></li><li><a href="/brands/u">U</a></li>
+      <li><a href="/brands/v">V</a></li><li><a href="/brands/w">W</a></li><li><a href="/brands/x">X</a></li>
+      <li><a href="/brands/y">Y</a></li><li><a href="/brands/z">Z</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1>Tool and plant hire</h1>
+  <p class="lede">Same-day delivery across Derbyshire, Leicestershire and Nottinghamshire. Hire from one day, buy from 40,000 lines. Twenty-four branches, 300 delivery drivers, and a workshop at every depot for servicing and repairs. This is the main content, but there is no skip link and no landmarks, so it is not reached until late.</p>
+</div>
+
+<footer>
+  <div class="inner">
+    <div>
+      <h2>Shop</h2>
+      <ul>
+        <li><a href="/buy/new">New arrivals</a></li>
+        <li><a href="/buy/offers">Offers</a></li>
+        <li><a href="/buy/clearance">Clearance</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Hire</h2>
+      <ul>
+        <li><a href="/hire/rates">Hire rates</a></li>
+        <li><a href="/hire/terms">Terms of hire</a></li>
+        <li><a href="/hire/insurance">Insurance</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/about">About us</a></li>
+        <li><a href="/about/careers">Careers</a></li>
+        <li><a href="/about/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="/legal/privacy">Privacy</a></li>
+        <li><a href="/legal/cookies">Cookies</a></li>
+        <li><a href="/legal/accessibility">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
